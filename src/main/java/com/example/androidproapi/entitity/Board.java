@@ -36,6 +36,6 @@ public class Board {
     @JoinColumn(name = "boards_id")
     private Boards boards;
 
-    @OneToMany(mappedBy = "Board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<Task>();
 }

@@ -13,17 +13,17 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 
-@Entity(name = "Boards")
+@Entity(name = "boards")
 public class Boards {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "member_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     private User user;
 
-    @OneToMany(mappedBy = "Boards", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "boards", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Board> boards = new ArrayList<Board>();
 
 }
