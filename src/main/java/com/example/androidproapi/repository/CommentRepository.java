@@ -1,4 +1,8 @@
-package com.androidProductivity.api.repository;
+package com.example.androidproapi.repository;
 
-public class CommentRepository {
+
+import com.example.androidproapi.entitity.Comment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 }

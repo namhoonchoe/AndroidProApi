@@ -1,5 +1,6 @@
 package com.example.androidproapi.entitity;
 import com.example.androidproapi.constants.Category;
+import com.example.androidproapi.constants.Progress;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -33,7 +34,7 @@ public class Task {
     private Date due_date;
 
     @Enumerated(EnumType.STRING)
-    private Category category;
+    private Progress progress;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")

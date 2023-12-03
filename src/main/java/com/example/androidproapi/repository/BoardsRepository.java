@@ -1,4 +1,9 @@
-package com.androidProductivity.api.repository;
+package com.example.androidproapi.repository;
 
-public class BoardsRepository {
+import com.example.androidproapi.entitity.Boards;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+public interface BoardsRepository extends JpaRepository<Boards, Long> {
+
 }

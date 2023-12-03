@@ -1,4 +1,6 @@
-package com.androidProductivity.api.service;
+package com.example.androidproapi.service;
+import com.example.androidproapi.dto.SignInRequestDto;
 
-public class AuthService {
+public interface AuthService {
+    boolean authenticate(SignInRequestDto SignInRequest);
 }

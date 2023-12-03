@@ -1,4 +1,5 @@
-package com.androidProductivity.api.service;
+package com.example.androidproapi.service;
+import com.example.androidproapi.dto.CommentDto;
 
-public class CommentService {
+public interface CommentService {
 }

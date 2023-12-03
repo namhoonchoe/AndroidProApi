@@ -1,4 +1,5 @@
-package com.androidProductivity.api.service;
+package com.example.androidproapi.service;
 
-public class TaskService {
+import com.example.androidproapi.dto.TaskDto;
+public interface TaskService {
 }
