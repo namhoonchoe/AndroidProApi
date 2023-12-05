@@ -24,6 +24,6 @@ public class Boards {
     private User user;
 
     @OneToMany(mappedBy = "boards", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Board> boards = new ArrayList<Board>();
+    private List<Board> boards = new ArrayList<>();
 
 }

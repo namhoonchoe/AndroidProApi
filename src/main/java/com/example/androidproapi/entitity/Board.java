@@ -12,7 +12,7 @@ import java.util.List;
 
 @Setter
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Entity(name = "board")
 
 public class Board {
@@ -23,13 +23,13 @@ public class Board {
     @Column(name = "board_name", nullable = false)
     private String board_name;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING) //enum 컬럼 기본값 설정해야함
     private Category category;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = true)
     private String description;
 
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", nullable = true)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
