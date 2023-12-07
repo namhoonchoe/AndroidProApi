@@ -1,23 +1,53 @@
 package com.example.androidproapi.controllers;
 
 
+import com.example.androidproapi.dto.BoardDto;
+import com.example.androidproapi.service.BoardService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("./api/")
+@RequestMapping("/api/")
 
 public class BoardsController {
 
+    private  BoardService boardService;
+    @Autowired
+    public BoardsController(BoardService boardService)  {
+        this.boardService = boardService;
+    }
 
-    /*@GetMapping("Boards")
-    public ResponseEntity
+    @GetMapping("boards")
+    public List<BoardDto> getAllBoards() {
+        return boardService.getAllBoards();
+    }
 
-    //PostMapping 뒤에 그냥 Boards 해도 무방함! 하지만 일단  달아둠
-    @PostMapping("Boards/create")
+    @PostMapping("boards")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<BoardDto> createBoard(@RequestBody BoardDto boardDto) {
+        return new ResponseEntity<>(boardService.createBoard(boardDto), HttpStatus.CREATED);
+    }
 
-    @GetMapping("Boards/{id}")
-    @PutMapping("Boards/{id}/update")
-    @DeleteMapping("Boards/{id}")*/
 
+    @GetMapping("boards/{boardId}")
+    public BoardDto getBoardById(@PathVariable(value = "boardId") Long boardId) {
+        return boardService.getBoardById(boardId);
+    }
+
+
+    @PutMapping("boards/{id} ")
+    public ResponseEntity<BoardDto> updateBoardById(@PathVariable(value = "id") Long boardId, @RequestBody BoardDto boardDto) {
+        BoardDto updatedBoard = boardService.updateBoardById(boardId, boardDto);
+        return new ResponseEntity<>(updatedBoard,   HttpStatus.OK);
+    }
+
+    @DeleteMapping("boards/{id}")
+    public ResponseEntity<String> deleteBoardById(@PathVariable(value = "id") Long boardId) {
+        boardService.deleteBoardById(boardId);
+        return new ResponseEntity<>("Board deleted successfully", HttpStatus.OK);
+    }
 }

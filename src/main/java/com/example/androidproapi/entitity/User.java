@@ -1,17 +1,15 @@
 package com.example.androidproapi.entitity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
+
+import  com.example.androidproapi.entitity.Board;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Setter
@@ -23,15 +21,16 @@ public class User {
     private Long id;
 
     @Column(name = "user_name ", nullable = false)
-    private String user_name;
+    private String username;
 
     @Column(name = "account", nullable = false)
     private String account;
 
     @Column(name = "profile_photo", nullable = true)
-    private String profile_photo ;
+    private String profilePhoto ;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Boards boards;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Board> boards = new ArrayList<Board>();
+
 
 }

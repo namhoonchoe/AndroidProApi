@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardDto {
-    private Long id;
+     private Long id;
      private String board_name;
      private Category category;
      private String description;

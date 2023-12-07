@@ -1,56 +1,83 @@
 package com.example.androidproapi.service.impl;
-
-
 import com.example.androidproapi.dto.BoardDto;
 import com.example.androidproapi.entitity.Board;
-import com.example.androidproapi.entitity.Boards;
+
 import com.example.androidproapi.repository.BoardRepository;
-import com.example.androidproapi.repository.BoardsRepository;
 import com.example.androidproapi.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BoardServiceImpl implements BoardService {
     private BoardRepository boardRepository;
-    private BoardsRepository boardsRepository;
+
+
     @Autowired
-    public BoardServiceImpl(BoardRepository boardRepository, BoardsRepository boardsRepository) {
+    public BoardServiceImpl(BoardRepository boardRepository ) {
         this.boardRepository = boardRepository;
-        this.boardsRepository = boardsRepository;
-    }
+     }
 
     @Override
-    public BoardDto createBoard(Long boardsId, BoardDto boardDto ) {
-        Board board = mapToEntity(boardDto);
+    public List<BoardDto> getAllBoards() {
+        List<Board> boards = boardRepository.findAll();
+        return boards.stream().map(board -> mapToDto(board)).collect(Collectors.toList());
+    }
 
-        /*
-        * 예외처리 로직 꼭  필요함 안 그럼 에러 표시남!
-        * */
 
-        Boards boards = boardsRepository.findById(boardsId).orElseThrow();
+    @Override
+    public BoardDto createBoard( BoardDto boardDto ) {
+        Board board = new Board();
+        board.setBoard_name(boardDto.getBoard_name());
+        board.setCategory(boardDto.getCategory());
+        board.setDescription(boardDto.getDescription());
+        board.setContent(boardDto.getContent());
+
         Board newBoard = boardRepository.save(board);
-        return mapToDto(newBoard);
+
+        BoardDto boardResponse = new BoardDto();
+        boardResponse.setId(newBoard.getId());
+        boardResponse.setBoard_name(newBoard.getBoard_name());
+        boardResponse.setCategory(newBoard.getCategory());
+        boardResponse.setDescription(newBoard.getDescription());
+        boardResponse.setContent(newBoard.getContent());
+
+        return boardResponse;
+
     }
 
     @Override
-    public BoardDto getBoardById(Long boardsId ,Long boardId) {
+    public BoardDto getBoardById(Long boardId) {
+        List<Board> boards = boardRepository.findAll();
+        Board board = boardRepository.findById(boardId).orElseThrow();
 
-        return null;
+        return mapToDto(board);
     }
 
 
     @Override
-    public BoardDto updateBoardById(Long boardsId, Long boardId, BoardDto boardDto) {
+    public BoardDto updateBoardById(Long boardId, BoardDto boardDto) {
 
-        return boardDto;
+        List<Board> boards = boardRepository.findAll();
+
+        Board board = boardRepository.findById(boardId).orElseThrow();
+
+        BoardDto boardResponse = new BoardDto();
+        boardResponse.setBoard_name(board.getBoard_name());
+        boardResponse.setCategory(board.getCategory());
+        boardResponse.setDescription(board.getDescription());
+        boardResponse.setContent(board.getContent());
+
+
+        return boardResponse;
     }
 
     @Override
-    public void deleteBoardById(Long boardsId, Long boardId) {
-
+    public void deleteBoardById(Long boardId) {
+        Board board = boardRepository.findById(boardId).orElseThrow();
+        boardRepository.delete(board);
     }
 
 
@@ -58,6 +85,8 @@ public class BoardServiceImpl implements BoardService {
     //Entity -> DTO
     private BoardDto mapToDto(Board board) {
         BoardDto boardDto = new BoardDto();
+
+        boardDto.setId(board.getId());
         boardDto.setBoard_name(board.getBoard_name());
         boardDto.setCategory(board.getCategory());
         boardDto.setDescription(board.getDescription());
@@ -74,8 +103,6 @@ public class BoardServiceImpl implements BoardService {
         board.setContent(boardDto.getContent());
         return board;
     }
-
-
 
 
 }

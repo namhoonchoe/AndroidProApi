@@ -1,12 +1,11 @@
 package com.example.androidproapi.entitity;
 import com.example.androidproapi.constants.Category;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import org.hibernate.annotations.ColumnDefault;
+import com.example.androidproapi.constants.Category;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,18 +22,20 @@ public class Board {
     @Column(name = "board_name", nullable = false)
     private String board_name;
 
-    @Enumerated(EnumType.STRING) //enum 컬럼 기본값 설정해야함
-    private Category category;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category", nullable = false, columnDefinition = "varchar(20) default 'DO'")
+    private Category category = Category.DO;
 
-    @Column(name = "description", nullable = true)
+    @Column(name = "description")
     private String description;
 
-    @Column(name = "content", nullable = true)
+    @Column(name = "content")
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "boards_id")
-    private Boards boards;
+    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private User user;
+
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<Task>();
