@@ -60,8 +60,6 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardDto updateBoardById(Long boardId, BoardDto boardDto) {
 
-        List<Board> boards = boardRepository.findAll();
-
         Board board = boardRepository.findById(boardId).orElseThrow();
 
         BoardDto boardResponse = new BoardDto();
