@@ -61,15 +61,14 @@ public class BoardServiceImpl implements BoardService {
     public BoardDto updateBoardById(Long boardId, BoardDto boardDto) {
 
         Board board = boardRepository.findById(boardId).orElseThrow();
+        
+        board.setBoard_name(boardDto.getBoard_name());
+        board.setCategory(boardDto.getCategory());
+        board.setDescription(boardDto.getDescription());
+        board.setContent(boardDto.getContent());
 
-        BoardDto boardResponse = new BoardDto();
-        boardResponse.setBoard_name(board.getBoard_name());
-        boardResponse.setCategory(board.getCategory());
-        boardResponse.setDescription(board.getDescription());
-        boardResponse.setContent(board.getContent());
-
-
-        return boardResponse;
+        Board updatedBoard = boardRepository.save(board);
+        return mapToDto(updatedBoard);
     }
 
     @Override
