@@ -2,6 +2,7 @@ package com.example.androidproapi.service.impl;
 import com.example.androidproapi.dto.BoardDto;
 import com.example.androidproapi.entitity.Board;
 
+import com.example.androidproapi.exceptions.BoardNotFoundException;
 import com.example.androidproapi.repository.BoardRepository;
 import com.example.androidproapi.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardDto getBoardById(Long boardId) {
         List<Board> boards = boardRepository.findAll();
-        Board board = boardRepository.findById(boardId).orElseThrow();
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new BoardNotFoundException("Board not found with id " + boardId));
 
         return mapToDto(board);
     }
@@ -60,8 +61,8 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardDto updateBoardById(Long boardId, BoardDto boardDto) {
 
-        Board board = boardRepository.findById(boardId).orElseThrow();
-        
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new BoardNotFoundException("Board not found with id " + boardId));
+
         board.setBoard_name(boardDto.getBoard_name());
         board.setCategory(boardDto.getCategory());
         board.setDescription(boardDto.getDescription());
@@ -73,7 +74,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void deleteBoardById(Long boardId) {
-        Board board = boardRepository.findById(boardId).orElseThrow();
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new BoardNotFoundException("Board not found with id " + boardId));
         boardRepository.delete(board);
     }
 

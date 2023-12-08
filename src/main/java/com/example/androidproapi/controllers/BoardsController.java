@@ -1,9 +1,10 @@
+
 package com.example.androidproapi.controllers;
 
 
 import com.example.androidproapi.dto.BoardDto;
 import com.example.androidproapi.service.BoardService;
- import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/")
-
 public class BoardsController {
 
     private  BoardService boardService;
@@ -43,7 +43,7 @@ public class BoardsController {
     @RequestMapping(value = "boards/{id}", method = RequestMethod.PUT) //, produces = "application/json"
     public ResponseEntity<BoardDto> updateBoardById(@PathVariable(value = "id") Long boardId, @RequestBody BoardDto boardDto) {
         BoardDto updatedBoard = boardService.updateBoardById(boardId, boardDto);
-        return new ResponseEntity<>(updatedBoard,   HttpStatus.OK);
+        return new ResponseEntity<>(updatedBoard, HttpStatus.OK);
     }
 
     @DeleteMapping("boards/{id}")

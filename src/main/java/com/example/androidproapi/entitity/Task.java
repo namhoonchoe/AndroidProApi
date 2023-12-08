@@ -15,7 +15,7 @@ import java.util.List;
 
 @Setter
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Entity(name = "task")
 
 public class Task {

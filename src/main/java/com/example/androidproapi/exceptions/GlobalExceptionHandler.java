@@ -13,8 +13,8 @@ import java.util.Date;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(BoardsNotFoundException.class)
-    public ResponseEntity<ErrorObject> handlePokemonNotFoundException(BoardsNotFoundException ex, WebRequest request) {
+    @ExceptionHandler(BoardNotFoundException.class)
+    public ResponseEntity<ErrorObject> handleReviewNotFoundException(BoardNotFoundException ex, WebRequest request) {
 
         ErrorObject errorObject = new ErrorObject();
 
@@ -25,8 +25,21 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(BoardNotFoundException.class)
-    public ResponseEntity<ErrorObject> handleReviewNotFoundException(BoardNotFoundException ex, WebRequest request) {
+    @ExceptionHandler(TaskNotFoundException.class)
+    public ResponseEntity<ErrorObject> handleReviewNotFoundException(TaskNotFoundException ex, WebRequest request) {
+
+        ErrorObject errorObject = new ErrorObject();
+
+        errorObject.setStatusCode(HttpStatus.NOT_FOUND.value());
+        errorObject.setMessage(ex.getMessage());
+        errorObject.setTimestamp(new Date());
+
+        return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.NOT_FOUND);
+    }
+
+
+    @ExceptionHandler(CommentNotFoundException.class)
+    public ResponseEntity<ErrorObject> handleReviewNotFoundException(CommentNotFoundException ex, WebRequest request) {
 
         ErrorObject errorObject = new ErrorObject();
 
