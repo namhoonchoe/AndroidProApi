@@ -43,4 +43,4 @@ public class TasksController {
             taskService.deleteTaskByTaskId(boardId, taskId);
         return new ResponseEntity<>("task deleted successfully", HttpStatus.OK);
     }
-    }
+}
